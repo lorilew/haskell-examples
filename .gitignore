@@ -1,11 +1,13 @@
 introductions
 helloWorld
 reverseWords
-capslocker
+capsLocker
 readFile
 readFromFile
 readIO
 todoList
+copyFile
+toTry
 *.hi
 *.o
 temp*
