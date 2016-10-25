@@ -8,6 +8,7 @@ readIO
 todoList
 copyFile
 toTry
+reversePolish
 *.hi
 *.o
 temp*
