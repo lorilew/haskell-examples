@@ -1,3 +1,6 @@
+import qualified Data.Foldable as F
+import Data.Monoid
+
 data Tree a = EmptyTree | Node a (Tree a) (Tree a)
   deriving (Show, Read, Eq)
 
@@ -20,3 +23,9 @@ treeElem x (Node a left right)
   | x > a  = treeElem x right
 
 fromList xs = foldr treeInsert EmptyTree xs
+
+instance F.Foldable Tree where
+    foldMap f EmptyTree = mempty
+    foldMap f (Node x l r) = F.foldMap f l `mappend`
+                             f x           `mappend`
+                             F.foldMap f r

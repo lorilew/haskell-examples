@@ -12,3 +12,4 @@ reversePolish
 *.hi
 *.o
 temp*
+.DS_Store
