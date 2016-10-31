@@ -10,25 +10,24 @@ moveKnight (c,r) = do
   guard (c' `elem` [1..8] && r' `elem` [1..8])
   return (c',r')
 
-in3 :: KnightPos -> [KnightPos]
--- in3 start = do
---   first <- moveKnight start
---   second <- moveKnight first
---   moveKnight second
-in3 start = return start >>= moveKnight >>= moveKnight >>= moveKnight
+inMany :: KnightPos -> Int -> [KnightPos]
+inMany start 1 = moveKnight start
+inMany start acc = do
+      end <- moveKnight start
+      inMany end (acc - 1)
 
-canReachIn3 :: KnightPos -> KnightPos -> Bool
-canReachIn3 start end = end `elem` in3 start
+canReachInMany :: KnightPos -> KnightPos -> Int -> Bool
+canReachInMany start end n = end `elem` inMany start n
 
-in3WithInst :: KnightPos -> [(KnightPos, KnightPos, KnightPos)]
+in3WithInst :: KnightPos -> [[KnightPos]]
 in3WithInst start = do
   first <- moveKnight start
   second <- moveKnight first
   third <- moveKnight second
-  return (first, second, third)
+  return [third, second, first]
 
 finalPos :: (a,b,c) -> (c)
 finalPos (_,_,c) = c
 
-canReachIn3WithInst :: KnightPos -> KnightPos -> [(KnightPos, KnightPos, KnightPos)]
-canReachIn3WithInst start end = [moves | moves <- (in3WithInst start), end == finalPos moves]
+canReachIn3WithInst :: KnightPos -> KnightPos -> [[KnightPos]]
+canReachIn3WithInst start end = [moves | moves <- (in3WithInst start), end == head moves]
