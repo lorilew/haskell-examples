@@ -11,10 +11,7 @@ moveKnight (c,r) = do
   return (c',r')
 
 inMany :: KnightPos -> Int -> [KnightPos]
-inMany start 1 = moveKnight start
-inMany start acc = do
-      end <- moveKnight start
-      inMany end (acc - 1)
+inMany start x = return start >>= foldr (<=<) return (replicate x moveKnight)
 
 canReachInMany :: KnightPos -> KnightPos -> Int -> Bool
 canReachInMany start end n = end `elem` inMany start n
